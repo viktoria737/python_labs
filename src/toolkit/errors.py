@@ -1,8 +1,8 @@
 class ToolkitError(Exception):
-    pass
+    """Базовое исключение для всех ошибок пакета toolkit."""
 
 class CalculatorError(ToolkitError):
-    pass
+    """Ошибка, возникшая при вычислении выражения калькулятором."""
 
 class ConverterError(ToolkitError):
-    pass
+    """Ошибка, возникшая при конвертации величин."""

@@ -8,6 +8,7 @@ from toolkit.errors import ConverterError
 
 
 def find_unit_group(unit: str) -> str:
+    """Определение группы, к которой принадлежит единица."""
     for group_name, units in UNIT_GROUPS.items():
         if unit in units:
             return group_name
@@ -17,11 +18,14 @@ def find_unit_group(unit: str) -> str:
 def convert_linear(
         value: float, from_unit: str, to_unit: str, factors: dict[str, float]
 ) -> float:
+    """Конвертирование линейной величины (длина или масса).
+    Приводит значение к базовой единице, затем из базовой в целевую."""
     base_value = value * factors[from_unit]
     return base_value / factors[to_unit]
 
 
 def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
+    """Конвертирование температуры между шкалами Цельсия, Фаренгейта и Кельвина."""
     if from_unit == "k":
         kelvin = value
     elif from_unit == "c":
@@ -43,6 +47,7 @@ def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
 
 
 def convert(value: float, from_unit: str, to_unit: str) -> float:
+    """Конвертирование величины из одной единицы в другую."""
     from_unit_lower = from_unit.lower()
     to_unit_lower = to_unit.lower()
     from_group = find_unit_group(from_unit_lower)

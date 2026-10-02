@@ -7,15 +7,19 @@ UNARY_OPERATOR_TOKEN = "UNARY_OPERATOR"
 
 
 class Token:
+    """Представление одного токена в выражении."""
     def __init__(self, token_type: str, value: str, position: int) -> None:
+        """Инициализирование токена."""
         self.type = token_type
         self.value = value
         self.position = position
 
     def __repr__(self) -> str:
+        """Строковое представление для отладки."""
         return f"Token({self.type!r}, {self.value!r}, pos={self.position})"
 
     def __eq__(self, other: object) -> bool:
+        """Сравнение токенов по всем параметрам."""
         if not isinstance(other, Token):
             return NotImplemented
         return (
@@ -26,6 +30,7 @@ class Token:
 
 
 def tokenize(expression: str) -> list[Token]:
+    """Разбивание строки выражения на список токенов."""
     if not expression or expression.strip() == "":
         raise CalculatorError("Пустое выражение")
 
@@ -70,6 +75,7 @@ def tokenize(expression: str) -> list[Token]:
 
 
 def validate_tokens(tokens: list[Token]) -> None:
+    """Проверка на корректность последовательности токенов."""
     if len(tokens) == 0:
         raise CalculatorError("Пустое выражение")
     for idx, token in enumerate(tokens):
@@ -97,6 +103,7 @@ def validate_tokens(tokens: list[Token]) -> None:
 
 
 def to_rpn(tokens: list[Token]) -> list[Token]:
+    """Преобразование токенов в обратную польскую запись (RPN)."""
     output: list[Token] = []
     operator_stack: list[Token] = []
     for token in tokens:
@@ -127,6 +134,7 @@ def to_rpn(tokens: list[Token]) -> list[Token]:
 
 
 def evaluate_rpn(rpn: list[Token]) -> float:
+    """Вычисление значения выражения, заданного в RPN."""
     stack: list[float] = []
     for token in rpn:
         if token.type == NUMBER_TOKEN:
@@ -161,6 +169,7 @@ def evaluate_rpn(rpn: list[Token]) -> float:
 
 
 def calculate(expression: str) -> float:
+    """Вычисление арифметического выражения."""
     tokens = tokenize(expression)
     validate_tokens(tokens)
     rpn = to_rpn(tokens)
